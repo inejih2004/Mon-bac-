@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ابحث عن جامعتك بعد البكالوريا</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .light-mode {
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    .dark-mode {
+      background-color: #222;
+      color: #f4f4f9;
+    }
+
+    header {
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 10px;
+    }
+
+    #theme-toggle, #lang-toggle {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 5px;
+    }
+
+    #theme-toggle:hover, #lang-toggle:hover {
+      background-color: #0056b3;
+    }
+
+    .input-section {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-color: #fff;
+    }
+
+    .dark-mode .input-section {
+      background-color: #333;
+      border-color: #555;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    #submit-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    #submit-btn:hover {
+      background-color: #218838;
+    }
+
+    .results-section {
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    #results-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    #results-list li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .dark-mode #results-list li {
+      border-bottom: 1px solid #555;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    footer a, footer button {
+      color: #007bff;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      margin: 0 10px;
+    }
+
+    footer a:hover, footer button:hover {
+      text-decoration: underline;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .social-icons {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5em;
+      }
+
+      .input-section, .results-section {
+        padding: 15px;
+      }
+
+      #theme-toggle, #lang-toggle {
+        padding: 6px 12px;
+        font-size: 0.9em;
+      }
+
+      .button-group, .social-icons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      footer a, footer button {
+        margin: 5px 0;
+      }
+    }
+  </style>
+</head>
+<body class="light-mode" data-lang="ar">
+  <header>
+    <h1 class="lang-ar">🧑‍🎓 اكتشف الجامعات التي يمكنك الالتحاق بها بعد البكالوريا!</h1>
+    <h1 class="lang-fr" style="display: none;">🧑‍🎓 Découvrez les universités que vous pouvez rejoindre après le BAC !</h1>
+    <div>
+      <button id="theme-toggle">🌙 الوضع الداكن</button>
+      <button id="lang-toggle">Français</button>
+    </div>
+  </header>
+  <main>
+    <section class="input-section">
+      <label for="bac-type" class="lang-ar">اختر نوع البكالوريا:</label>
+      <label for="bac-type" class="lang-fr" style="display: none;">Choisissez le type de BAC :</label>
+      <select id="bac-type" required>
+        <option value="">-- اختر --</option>
+        <option value="C">C (علوم رياضية / Sciences Mathématiques)</option>
+        <option value="D">D (علوم تجريبية / Sciences Expérimentales)</option>
+        <option value="T">T (تقني / Technique)</option>
+        <option value="A">A (آداب / Lettres)</option>
+        <option value="O">O (شرعي / Sciences Islamiques)</option>
+      </select>
+
+      <label for="bac-average" class="lang-ar">أدخل معدل البكالوريا:</label>
+      <label for="bac-average" class="lang-fr" style="display: none;">Entrez votre moyenne du BAC :</label>
+      <input type="number" id="bac-average" step="0.01" min="0" max="20" placeholder="مثال: 12.5" required>
+
+      <button id="submit-btn" class="lang-ar">عرض النتائج</button>
+      <button id="submit-btn" class="lang-fr" style="display: none;">Afficher les résultats</button>
+    </section>
+
+    <section id="results" class="results-section">
+      <h2 class="lang-ar">النتائج</h2>
+      <h2 class="lang-fr" style="display: none;">Résultats</h2>
+      <div id="results-list"></div>
+    </section>
+  </main>
+  <footer>
+    <div class="button-group">
+      <a href="https://api.whatsapp.com/send?phone=+22231708835&text=%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AF%D8%B9%D9%85%D9%83%20%D8%A8%D9%8050%20%D8%A3%D9%88%D9%82%D9%8A%D8%A9" target="_blank" class="lang-ar">💖 ادعمنا (50 أوقية)</a>
+      <a href="https://api.whatsapp.com/send?phone=+22231708835&text=Je%20veux%20vous%20soutenir%20avec%2050%20ouguiyas" target="_blank" class="lang-fr" style="display: none;">💖 Soutenez-nous (50 ouguiyas)</a>
+      <a href="https://inejih2004.github.io/inejih-protofolio_version_2" target="_blank" class="lang-ar">🌐 زر موقع المطور</a>
+      <a href="https://inejih2004.github.io/inejih-protofolio_version_2" target="_blank" class="lang-fr" style="display: none;">🌐 Visiter le site du développeur</a>
+      <span class="lang-ar">🇲🇷 صنع ب❤️ في موريتانيا</span>
+      <span class="lang-fr" style="display: none;">🇲🇷 Fait avec ❤️ en Mauritanie</span>
+    </div>
+    <div class="social-icons">
+      <a href="https://www.facebook.com/profile.php?id=61578204988275" target="_blank" class="lang-ar">📘 فيسبوك</a>
+      <a href="https://www.facebook.com/profile.php?id=61578204988275" target="_blank" class="lang-fr" style="display: none;">📘 Facebook</a>
+      <a href="https://www.youtube.com/@learnenglishwithinejih" target="_blank" class="lang-ar">📺 يوتيوب</a>
+      <a href="https://www.youtube.com/@learnenglishwithinejih" target="_blank" class="lang-fr" style="display: none;">📺 YouTube</a>
+      <a href="https://www.tiktok.com/@english.with.inejih?is_from_webapp=1&sender_device=pc" target="_blank" class="lang-ar">🎵 تيك توك</a>
+      <a href="https://www.tiktok.com/@english.with.inejih?is_from_webapp=1&sender_device=pc" target="_blank" class="lang-fr" style="display: none;">🎵 TikTok</a>
+    </div>
+  </footer>
+  <script>
+    const schoolData = [
+      {
+        bacType: "D",
+        minAverage: 12,
+        maxAverage: 16,
+        fields: [
+          { ar: "منحة", fr: "Bourse" },
+          { ar: "كلية الطب", fr: "Faculté de Médecine" },
+          { ar: "المعهد العالي للرقمنة", fr: "Institut Supérieur du Numérique" },
+          { ar: "المعهد العالي لمهن الطاقة", fr: "Institut Supérieur des Métiers de l'Énergie" },
+          { ar: "معهد الإحصاء", fr: "Institut de Statistique" },
+          { ar: "معهد البحار بانواذيبو", fr: "Institut de la Mer à Nouadhibou" },
+          { ar: "معهد المعادن بازويرات", fr: "Institut des Mines à Zouerate" },
+          { ar: "معهد الاگ", fr: "Institut d'Aleg" },
+          { ar: "بوليتكنيك", fr: "Polytechnique" }
+        ]
+      },
+      {
+        bacType: "D",
+        minAverage: 8,
+        maxAverage: 12,
+        fields: [
+          { ar: "المعهد الجامعي المهني", fr: "Institut Universitaire Professionnel" },
+          { ar: "المعهد العالي للمحاسبة و إدارة المؤسسات", fr: "Institut Supérieur de Comptabilité et de Gestion" },
+          { ar: "Annexe 2", fr: "Annexe 2" },
+          { ar: "كلية العلوم والتقنيات", fr: "Faculté des Sciences et Techniques (FST)" },
+          { ar: "كلية الاقتصاد", fr: "Faculté de Droit et d’Économie (FSJE)" },
+          { ar: "كلية الآداب", fr: "Faculté des Lettres et Sciences Humaines (FLSH)" }
+        ]
+      },
+      {
+        bacType: "C",
+        minAverage: 13,
+        maxAverage: 17,
+        fields: [
+          { ar: "منحة", fr: "Bourse" },
+          { ar: "معهد الطاقة", fr: "Institut de l'Énergie" },
+          { ar: "معهد الاحصاء", fr: "Institut de Statistique" },
+          { ar: "معهد الرقمنة", fr: "Institut du Numérique" },
+          { ar: "كلية الطب", fr: "Faculté de Médecine" },
+          { ar: "معهد ألاگ", fr: "Institut d’Aleg" },
+          { ar: "معهد المعادن", fr: "Institut des Mines" },
+          { ar: "معهد التعليم التكنولوجي", fr: "Institut de l’Enseignement Technologique" },
+          { ar: "معهد البحار", fr: "Institut de la Mer" },
+          { ar: "معهد اللغات بانواذيبو", fr: "Institut des Langues à Nouadhibou" }
+        ]
+      },
+      {
+        bacType: "C",
+        minAverage: 8,
+        maxAverage: 12,
+        fields: [
+          { ar: "المعهد العالي للمحاسبة و إداراة المؤسسات", fr: "Institut Supérieur de Comptabilité et de Gestion" },
+          { ar: "المعهد الجامعي المهني", fr: "Institut Universitaire Professionnel" },
+          { ar: "كلية العلوم والتقنيات", fr: "Faculté des Sciences et Techniques (FST)" },
+          { ar: "معهد اللغات بانواذيبو", fr: "Institut des Langues à Nouadhibou" }
+        ]
+      },
+      {
+        bacType: "T",
+        minAverage: 12,
+        maxAverage: 17,
+        fields: [
+          { ar: "منحة", fr: "Bourse" },
+          { ar: "معهد روصو", fr: "Institut de Rosso" },
+          { ar: "معهد ألاگ", fr: "Institut d’Aleg" }
+        ]
+      },
+      {
+        bacType: "T",
+        minAverage: 9,
+        maxAverage: 12,
+        fields: [
+          { ar: "FST", fr: "Faculté des Sciences et Techniques" },
+          { ar: "معهد روصو", fr: "Institut de Rosso" },
+          { ar: "معهد ألاگ", fr: "Institut d’Aleg" }
+        ]
+      },
+      {
+        bacType: "A",
+        minAverage: 12,
+        maxAverage: 16,
+        fields: [
+          { ar: "معهد اللغات في انواذيبو", fr: "Institut des Langues à Nouadhibou" },
+          { ar: "الإنجليزية، كلية الآداب", fr: "Anglais – Faculté des Lettres" },
+          { ar: "الفرنسية، كلية الآداب", fr: "Français – Faculté des Lettres" },
+          { ar: "العربية، كلية الآداب", fr: "Arabe – Faculté des Lettres" },
+          { ar: "الإسبانية، كلية الآداب", fr: "Espagnol – Faculté des Lettres" },
+          { ar: "الصينية كلية الآداب", fr: "Chinois – Faculté des Lettres" },
+          { ar: "القانون، كلية القانون", fr: "Droit – Faculté de Droit" },
+          { ar: "معهد اللغة الإنجليزية", fr: "Institut d’Anglais" },
+          { ar: "المعهد العالي ISERI", fr: "ISERI – Institut Supérieur d’Études et de Recherches Islamiques" },
+          { ar: "جامعة لعيون", fr: "Université de L'Assaba (Laayoun)" }
+        ]
+      },
+      {
+        bacType: "O",
+        minAverage: 8,
+        maxAverage: 16,
+        fields: [
+          { ar: "الاقتصاد الإسلامي", fr: "Économie Islamique" },
+          { ar: "النظم والمهن القضائية", fr: "Systèmes et Métiers Judiciaires" },
+          { ar: "الفقه وأصوله", fr: "Jurisprudence Islamique" },
+          { ar: "أصول الدين", fr: "Fondements de la Religion" },
+          { ar: "الإعلام والاتصال", fr: "Communication et Médias" },
+          { ar: "التاريخ والحضارة", fr: "Histoire et Civilisation" },
+          { ar: "اللغة العربية", fr: "Langue Arabe" },
+          { ar: "القانون العام", fr: "Droit Public" },
+          { ar: "القانون الخاص", fr: "Droit Privé" },
+          { ar: "القرآن وعلومه", fr: "Coran et ses Sciences" },
+          { ar: "السنة النبوية", fr: "Sunna du Prophète" },
+          { ar: "السياسة الشرعية", fr: "Politique Légitime" },
+          { ar: "علم النفس", fr: "Psychologie" },
+          { ar: "العقيدة والفكر", fr: "Dogme et Pensée Islamique" },
+          { ar: "الفلسفة", fr: "Philosophie" },
+          { ar: "علم الاجتماع", fr: "Sociologie" },
+          { ar: "الجغرافيا", fr: "Géographie" }
+        ]
+      }
+    ];
+
+    document.getElementById('submit-btn').addEventListener('click', () => {
+      const bacType = document.getElementById('bac-type').value;
+      const bacAverage = parseFloat(document.getElementById('bac-average').value);
+      const resultsList = document.getElementById('results-list');
+      const lang = document.body.getAttribute('data-lang');
+
+      resultsList.innerHTML = '';
+
+      if (!bacType || isNaN(bacAverage)) {
+        resultsList.innerHTML = lang === 'ar' 
+          ? '<p>يرجى اختيار نوع البكالوريا وإدخال معدل صحيح.</p>'
+          : '<p>Veuillez choisir le type de BAC et entrer une moyenne valide.</p>';
+        return;
+      }
+
+      const matchingSchools = schoolData
+        .filter(school => school.bacType === bacType && bacAverage >= school.minAverage && bacAverage <= school.maxAverage)
+        .flatMap(school => school.fields.map(field => ({
+          ar: field.ar,
+          fr: field.fr
+        })));
+
+      if (matchingSchools.length === 0) {
+        resultsList.innerHTML = lang === 'ar' 
+          ? '<p>لا توجد مؤسسات تتطابق مع معدلك ونوع البكالوريا.</p>'
+          : '<p>Aucune institution ne correspond à votre moyenne et type de BAC.</p>';
+      } else {
+        matchingSchools.forEach(school => {
+          const li = document.createElement('li');
+          li.innerHTML = lang === 'ar' 
+            ? `<strong>${school.ar}</strong> (${school.fr})`
+            : `<strong>${school.fr}</strong> (${school.ar})`;
+          resultsList.appendChild(li);
+        });
+      }
+    });
+
+    document.getElementById('theme-toggle').addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      document.body.classList.toggle('dark-mode');
+      const button = document.getElementById('theme-toggle');
+      const lang = document.body.getAttribute('data-lang');
+      button.textContent = document.body.classList.contains('dark-mode') 
+        ? (lang === 'ar' ? '☀️ الوضع الفاتح' : '☀️ Mode clair')
+        : (lang === 'ar' ? '🌙 الوضع الداكن' : '🌙 Mode sombre');
+    });
+
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      const lang = document.body.getAttribute('data-lang') === 'ar' ? 'fr' : 'ar';
+      document.body.setAttribute('data-lang', lang);
+      document.querySelectorAll('.lang-ar').forEach(el => el.style.display = lang === 'ar' ? 'block' : 'none');
+      document.querySelectorAll('.lang-fr').forEach(el => el.style.display = lang === 'fr' ? 'block' : 'none');
+      document.getElementById('lang-toggle').textContent = lang === 'ar' ? 'Français' : 'العربية';
+      document.getElementById('theme-toggle').textContent = document.body.classList.contains('dark-mode') 
+        ? (lang === 'ar' ? '☀️ الوضع الفاتح' : '☀️ Mode clair')
+        : (lang === 'ar' ? '🌙 الوضع الداكن' : '🌙 Mode sombre');
+      document.getElementById('submit-btn').click(); // Refresh results if any
+    });
+  </script>
+</body>
+</html>
